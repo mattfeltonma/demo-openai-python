@@ -1,14 +1,11 @@
 import logging
 import sys
-import os
 import openai
 from msal import ConfidentialClientApplication
-
 
 def get_sp_access_token(client_id, client_credential, tenant_name, scopes):
     logging.info('Attempting to obtain an access token...')
     result = None
-    print(tenant_name)
     app = ConfidentialClientApplication(
         client_id=client_id,
         client_credential=client_credential,
@@ -30,6 +27,7 @@ def get_sp_access_token(client_id, client_credential, tenant_name, scopes):
 
 def main():
 
+    # Setup variables
     CLIENT_ID = {{YOUR_CLIENT_ID}}
     CLIENT_SECRET = {{YOUR_CLIENT_SECRET}}
     TENANT_ID = {{YOUR_TENANT_ID}}
