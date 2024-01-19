@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 # Function that obtains an access token
 def get_sp_access_token(client_id, client_credential, tenant_name, scopes):
     logging.info('Attempting to obtain an access token...')
+    
     result = None
     app = ConfidentialClientApplication(
         client_id=client_id,
@@ -16,8 +17,10 @@ def get_sp_access_token(client_id, client_credential, tenant_name, scopes):
         authority=f"https://login.microsoftonline.com/{tenant_name}",
         verify=False
     )
-    result = app.acquire_token_for_client(scopes=scopes)
-
+    if not result:
+        logging.info('No suitable token exists in cache. Obtaining a new one...')
+        result = app.acquire_token_for_client(scopes=scopes)
+        
     if "access_token" in result:
         logging.info('Access token successfully acquired')
         return result['access_token']
@@ -43,8 +46,10 @@ def main():
 
     # Setup non-sensitive variables
     API_VERSION = "2023-12-01-preview"
-    DEPLOYMENT_NAME = {{YOUR_MODEL_DEPLOYMENT_NAME}}
-    AZURE_OPENAI_ENDPOINT = {{YOUR_AZURE_OPENAI_SERVICE_URL}}
+    #DEPLOYMENT_NAME = {{YOUR_MODEL_DEPLOYMENT_NAME}}
+    #AZURE_OPENAI_ENDPOINT = {{YOUR_AZURE_OPENAI_SERVICE_URL}}
+    DEPLOYMENT_NAME = "test"
+    AZURE_OPENAI_ENDPOINT = "openaimf.openai.azure.com"
 
     # Use dotenv library to load sensitive environmental variables from .secret file.
     # The variables loaded include AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
@@ -65,7 +70,7 @@ def main():
             ]
         )
     except:
-        logging.error('Failed to obtain access token: ', exc_info=True)
+        logging.info('Failed to obtain access token: ', exc_info=True)
 
     try:
         headers = {
