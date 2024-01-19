@@ -46,10 +46,8 @@ def main():
 
     # Setup non-sensitive variables
     API_VERSION = "2023-12-01-preview"
-    #DEPLOYMENT_NAME = {{YOUR_MODEL_DEPLOYMENT_NAME}}
-    #AZURE_OPENAI_ENDPOINT = {{YOUR_AZURE_OPENAI_SERVICE_URL}}
-    DEPLOYMENT_NAME = "test"
-    AZURE_OPENAI_ENDPOINT = "openaimf.openai.azure.com"
+    DEPLOYMENT_NAME = {{YOUR_MODEL_DEPLOYMENT_NAME}}
+    AZURE_OPENAI_ENDPOINT = {{YOUR_AZURE_OPENAI_SERVICE_URL}}
 
     # Use dotenv library to load sensitive environmental variables from .secret file.
     # The variables loaded include AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
